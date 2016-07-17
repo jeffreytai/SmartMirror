@@ -182,12 +182,12 @@ require 'class.iCalReader.php';
 
         var icon = icon_table[weather.weather[0].icon];
         document.getElementById('temperature').innerHTML = '<i class="wi ' + icon + '"></i> ';
-        document.getElementById('temperature').innerHTML += Math.round(weather.main.temp*10)/10 + '\xB0';
+        document.getElementById('temperature').innerHTML += Math.round(weather.main.temp) + '\xB0';
 
         // Weather forecast
         var forecast_url = 'http://api.openweathermap.org/data/2.5/forecast/daily?zip=90024,us&units=imperial&appid=';
         var forecast = JSON.parse(retrieve(forecast_url));
-        console.log(forecast);
+        // console.log(forecast);
 
         var forecast_table = document.getElementById('forecast');
         for (i=1; i<7; i++) {
@@ -207,12 +207,12 @@ require 'class.iCalReader.php';
 
           var high_cell = document.createElement('td');
           var high_temp = forecast.list[i].temp.max;
-          high_cell.innerHTML = high_temp.toFixed(1);
+          high_cell.innerHTML = Math.round(high_temp);
           row.appendChild(high_cell);
 
           var low_cell = document.createElement('td');
           var low_temp = forecast.list[i].temp.min;
-          low_cell.innerHTML = low_temp.toFixed(1);
+          low_cell.innerHTML = Math.round(low_temp);
           row.appendChild(low_cell);
 
         }
@@ -230,7 +230,41 @@ require 'class.iCalReader.php';
   <div class="region bottom bar">
 		<div class="container"></div>
 		<div class="region bottom left"><div class="container"></div></div>
-		<div class="region bottom center"><div class="container"></div></div>
+		<div class="region bottom center">
+      <div class="container">
+        <div id="rssfeed" class="xsmall dimmed"></div>
+
+        <!-- RSS news feed from New York Times -->
+        <?php
+
+        $news = array();
+        $url = "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml";
+        $xml = simplexml_load_file($url);
+        for ($i=0; $i<10; $i++) {
+          $title = $xml->channel->item[$i]->title;
+          array_push($news, $title);
+        }
+
+        ?>
+
+        <script type="text/javascript">
+          var news = <?php echo json_encode($news) ?>;
+          var rssfeed = document.getElementById('rssfeed');
+          rssfeed.innerHTML = news[0][0];
+          setInterval(change, 5000);
+          var counter = 1;
+          function change() {
+            rssfeed.innerHTML = news[counter][0];
+            counter++;
+            if (counter >= news.length) counter = 0;
+          }
+        </script>
+
+
+
+
+      </div>
+    </div>
 		<div class="region bottom right"><div class="container"></div></div>
 	</div>
   <div class="region fullscreen above"><div class="container"></div></div>
