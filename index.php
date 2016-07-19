@@ -9,11 +9,45 @@ require 'class.iCalReader.php';
 <head>
   <title>Smart Mirror</title>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <!-- refresh page every 30 seconds -->
-  <meta http-equiv="refresh" content="30" />
+  <meta name="viewport" content="initial-scale=1.0">
+  <!-- refresh page every 45 seconds -->
+  <!-- <meta http-equiv="refresh" content="45" /> -->
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/weather-icons.css">
   <link rel="stylesheet" type="text/css" href="fonts/roboto.css">
+
+  <script src="http://maps.googleapis.com/maps/api/js"></script>
+  <script>
+    function initialize() {
+      // Instantiate a directions service
+      var directionsService = new google.maps.DirectionsService;
+
+      // Create a map and center it
+      var mapProp = {
+        center:new google.maps.LatLng(34.067342, -118.453143),
+        zoom:12,
+        // mapTypeId:google.maps.MapTypeId.ROADMAP,
+        mapTypeControl:false,
+        disableDefaultUI:true
+      };
+
+      // Create a renderer for directions and bind it to the map.
+      var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+
+      directionsService.route({
+        origin: '540 Kelton Ave, Los Angeles, CA 90024',
+        destination: '215 W 6th St, Los Angeles, CA 90014',
+        travelMode: google.maps.TravelMode.DRIVING
+      }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        }
+      })
+      var map=new google.maps.Map(document.getElementById("map"),mapProp);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
 </head>
 <body>
 
@@ -224,7 +258,11 @@ require 'class.iCalReader.php';
   </div>
 
   <div class="region upper third"><div class="container"></div></div>
-  <div class="region middle center"><div class="container"></div></div>
+  <div class="region middle center">
+    <div class="container">
+      <div id="map"></div>
+    </div>
+  </div>
 	<div class="region lower third"><div class="container"><br/></div></div>
 
   <div class="region bottom bar">
@@ -251,7 +289,7 @@ require 'class.iCalReader.php';
           var news = <?php echo json_encode($news) ?>;
           var rssfeed = document.getElementById('rssfeed');
           rssfeed.innerHTML = news[0][0];
-          setInterval(change, 5000);
+          setInterval(change, 7000);
           var counter = 1;
           function change() {
             rssfeed.innerHTML = news[counter][0];
@@ -259,9 +297,6 @@ require 'class.iCalReader.php';
             if (counter >= news.length) counter = 0;
           }
         </script>
-
-
-
 
       </div>
     </div>
