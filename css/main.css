@@ -34,15 +34,17 @@ body {
   transform: translateY(-50%);
 }
 
-/* remove Google Maps terms of use */
-a[href^="http://maps.google.com/maps"]{display:none !important}
+/* hides Google logo and terms of use */
+.gmnoprint:not(.gm-bundled-control) {
+        display: none;
+    }
 
-.gmnoprint a, .gmnoprint span {
-    display:none;
+.gm-bundled-control .gmnoprint {
+    display: block;
 }
-.gmnoprint div {
-    background:none !important;
-}
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+a[href^="https://www.google.com/maps"]{display:none !important}
 
 /**
  * Default styles.
