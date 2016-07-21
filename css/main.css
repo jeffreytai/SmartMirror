@@ -21,7 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-#map {
+#map-canvas {
   width: 200px;
   height: 250px;
   text-align: center;
