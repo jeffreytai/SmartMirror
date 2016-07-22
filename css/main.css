@@ -227,6 +227,11 @@ sup {
   transform: translateY(-50%);
 }
 
+#travel-time {
+  padding-top: 250px;
+  padding-left: 20px;
+}
+
 .region.upper.third {
   top: 33%;
 }
