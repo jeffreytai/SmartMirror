@@ -11,7 +11,7 @@ require 'class.iCalReader.php';
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="initial-scale=1.0">
   <!-- refresh page every 45 seconds -->
-  <!-- <meta http-equiv="refresh" content="45" /> -->
+  <meta http-equiv="refresh" content="45" />
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/weather-icons.css">
   <link rel="stylesheet" type="text/css" href="fonts/roboto.css">
@@ -20,7 +20,7 @@ require 'class.iCalReader.php';
   <!-- <script type="text/javascript" src="js/rssfeed.js"></script> -->
 
   <script src="https://maps.googleapis.com/maps/api/js"></script>
-  <script type="text/javascript" src="js/map.js"></script>
+  <script type="text/javascript" src="js/maps.js"></script>
 
 </head>
 <body>
